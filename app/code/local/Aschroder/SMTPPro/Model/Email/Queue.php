@@ -126,6 +126,8 @@ class Aschroder_SMTPPro_Model_Email_Queue extends Mage_Core_Model_Email_Queue {
                     Mage::logException($e);
                     Mage::setIsDeveloperMode($oldDevMode);
 
+                    // @mod: Log problem email records
+                    $errorEmailRecords[] = 'Message ID: '.$message->getId(). ' - ' .$email;
                     // @mod: Bug fix to skip to next record if there is any issue sending email for current record
                     //return false;
                     contiue;
@@ -138,6 +140,12 @@ class Aschroder_SMTPPro_Model_Email_Queue extends Mage_Core_Model_Email_Queue {
                 }
 
             }
+        }
+
+        // @mod: If there any error records, return errors.
+        if (isset($errorEmailRecords))
+        {
+            return 'ERROR: '.PHP_EOL.PHP_EOL. 'Problem Emails '.PHP_EOL.implode(','.PHP_EOL,$errorEmailRecords);
         }
 
         return $this;
