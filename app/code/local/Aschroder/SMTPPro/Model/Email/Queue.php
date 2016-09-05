@@ -128,7 +128,7 @@ class Aschroder_SMTPPro_Model_Email_Queue extends Mage_Core_Model_Email_Queue {
 
                     // @mod: Bug fix to skip to next record if there is any issue sending email for current record
                     //return false;
-                    contiue;
+                    continue;
                 }
 
                 // after each valid message has been sent - pause if required
